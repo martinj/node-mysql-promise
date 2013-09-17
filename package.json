@@ -1,0 +1,29 @@
+{
+  "name": "mysql-promise",
+  "version": "0.1.0",
+  "description": "Small wrapper for mysql that use promises.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jshint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/martinj/node-mysql-promise"
+  },
+  "keywords": [
+    "mysql",
+    "promise"
+  ],
+  "author": "Martin Jonsson <martin.jonsson@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/martinj/node-mysql-promise/issues"
+  },
+  "dependencies": {
+    "mysql": "~2.0.0-alpha9",
+    "q": "~0.9.7"
+  },
+  "devDependencies": {
+    "jshint": "~2.1.10"
+  }
+}
