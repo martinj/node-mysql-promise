@@ -1,6 +1,6 @@
 'use strict';
 
-var Q = require('q'),
+var Promise = require('bluebird'),
 	mysql = require('mysql'),
 	pool = null;
 
@@ -19,7 +19,7 @@ exports.configure = function (config) {
  * @return {Promise}
  */
 exports.query = function (query, params) {
-	var defer = Q.defer();
+	var defer = Promise.defer();
 	params = params || {};
 
 	pool.getConnection(function (err, con) {

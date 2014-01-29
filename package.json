@@ -1,6 +1,6 @@
 {
   "name": "mysql-promise",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Small wrapper for mysql that use promises.",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "mysql": "~2.0.0-alpha9",
-    "q": "~0.9.7"
+    "bluebird": "~1.0.0"
   },
   "devDependencies": {
     "jshint": "~2.1.10"
