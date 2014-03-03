@@ -20,8 +20,8 @@
     "url": "https://github.com/martinj/node-mysql-promise/issues"
   },
   "dependencies": {
-    "mysql": "^2.0.1",
-    "bluebird": "^1.0.7"
+    "mysql": "2.0.1",
+    "bluebird": "1.0.7"
   },
   "devDependencies": {
     "jshint": "~2.1.10",
