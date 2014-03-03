@@ -1,10 +1,10 @@
 {
   "name": "mysql-promise",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Small wrapper for mysql that use promises.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jshint index.js"
+    "test": "./node_modules/.bin/jshint index.js && ./node_modules/.bin/mocha test/*.test.js"
   },
   "repository": {
     "type": "git",
@@ -20,10 +20,12 @@
     "url": "https://github.com/martinj/node-mysql-promise/issues"
   },
   "dependencies": {
-    "mysql": "~2.0.0-alpha9",
-    "bluebird": "~1.0.0"
+    "mysql": "^2.0.1",
+    "bluebird": "^1.0.7"
   },
   "devDependencies": {
-    "jshint": "~2.1.10"
+    "jshint": "~2.1.10",
+    "should": "^3.1.3",
+    "mocha": "^1.17.1"
   }
 }

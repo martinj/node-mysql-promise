@@ -2,14 +2,18 @@
 
 var Promise = require('bluebird'),
 	mysql = require('mysql'),
-	pool = null;
+	instances = {};
+
+function DB() {
+	this.pool = null;
+}
 
 /**
- * Setup the Database connection pool
+ * Setup the Database connection pool for this instance
  * @param  {Object} config
  */
-exports.configure = function (config) {
-	pool = mysql.createPool(config);
+DB.prototype.configure = function (config) {
+	this.pool = mysql.createPool(config);
 };
 
 /**
@@ -18,11 +22,11 @@ exports.configure = function (config) {
  * @param  {Object} [params]
  * @return {Promise}
  */
-exports.query = function (query, params) {
+DB.prototype.query = function (query, params) {
 	var defer = Promise.defer();
 	params = params || {};
 
-	pool.getConnection(function (err, con) {
+	this.pool.getConnection(function (err, con) {
 		if (err) {
 			return defer.reject(err);
 		}
@@ -36,4 +40,12 @@ exports.query = function (query, params) {
 		});
 	});
 	return defer.promise;
+};
+
+module.exports = function (name) {
+	name = name || '_default_';
+	if (!instances[name]) {
+		instances[name] = new DB();
+	}
+	return instances[name];
 };
