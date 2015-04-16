@@ -28,11 +28,17 @@ DB.prototype.query = function (query, params) {
 
 	this.pool.getConnection(function (err, con) {
 		if (err) {
+			if (con) {
+				con.release();
+			}
 			return defer.reject(err);
 		}
 
 		con.query(query, params, function (err) {
 			if (err) {
+				if (con) {
+					con.release();
+				}
 				return defer.reject(err);
 			}
 			defer.resolve([].splice.call(arguments, 1));
