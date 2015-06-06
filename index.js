@@ -53,16 +53,16 @@ DB.prototype.query = function (query, params) {
  * @return {Promise}
  */
 DB.prototype.end = function () {
-    var defer = Promise.defer();
+	var defer = Promise.defer();
 
-    this.pool.end(function (err) {
-	if (err) {
-	    return defer.reject(err);
-	}
+	this.pool.end(function (err) {
+		if (err) {
+			return defer.reject(err);
+		}
 
-	defer.resolve();
-    });
-    return defer.promise;
+		defer.resolve();
+	});
+	return defer.promise;
 };
 
 module.exports = function (name) {
