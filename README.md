@@ -1,6 +1,6 @@
 # mysql-promise
 
-Small wrapper for mysql that use promises.
+Small wrapper for [mysql](https://www.npmjs.com/package/mysql) that use promises.
 
 [![build status](https://secure.travis-ci.org/martinj/node-mysql-promise.png)](http://travis-ci.org/martinj/node-mysql-promise)
 
