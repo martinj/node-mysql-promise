@@ -10,4 +10,25 @@ describe('mysql-promise', function () {
 		defaultDb.should.equal(db());
 		defaultDb.should.not.equal(namedDb);
 	});
+
+	describe('isConfigured()', function () {
+
+		it('should return false if it has no pool configured', function () {
+			var defaultDb = db();
+			defaultDb.isConfigured().should.be.false;
+		});
+
+		it('should return false if it has no pool configured', function () {
+			var defaultDb = db();
+			defaultDb.configure({
+				host: "localhost",
+				user: "foo",
+				password: "bar",
+				database: "db"
+			})
+			defaultDb.isConfigured().should.be.true;
+		});
+
+	});
+
 });
