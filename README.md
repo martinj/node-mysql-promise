@@ -33,12 +33,15 @@ db.query('UPDATE foo SET key = ?', ['value']).then(function () {
 //using multiple databases, giving it a name 'second-db' so it can be retrieved inside other modules/files.
 var db2 = require('mysql-promise')('second-db');
 
-db2.configure({
-	"host": "localhost",
-	"user": "foo",
-	"password": "bar",
-	"database": "another-db"
-});
+//check if has already been configured
+if (!db2.isConfigured()) {
+	db2.configure({
+		"host": "localhost",
+		"user": "foo",
+		"password": "bar",
+		"database": "another-db"
+	});
+}
 
 db2.query('SELECT * FROM users').spread(function (users) {
 	console.log('Hello users', users);

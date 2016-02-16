@@ -17,6 +17,14 @@ DB.prototype.configure = function (config) {
 };
 
 /**
+ * Check if a pool has been configured for this instane.
+ * @return {Boolean}
+ */
+DB.prototype.isConfigured = function () {
+	return !!this.pool;
+};
+
+/**
  * Run DB query
  * @param  {String} query
  * @param  {Object} [params]
