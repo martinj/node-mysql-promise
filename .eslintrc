@@ -1,0 +1,11 @@
+{
+	"extends": "@aptoma/eslint-config/lib/es5",
+	"env": {
+		"node": true,
+		"mocha": true,
+		"es6": false
+	},
+	"rules": {
+		"object-curly-spacing": [2, "always"]
+	}
+}
