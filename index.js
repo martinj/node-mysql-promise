@@ -31,29 +31,30 @@ DB.prototype.isConfigured = function () {
  * @return {Promise}
  */
 DB.prototype.query = function (query, params) {
-	var defer = Promise.defer();
+	var self = this;
 	params = params || {};
 
-	this.pool.getConnection(function (err, con) {
-		if (err) {
-			if (con) {
-				con.release();
-			}
-			return defer.reject(err);
-		}
-
-		con.query(query, params, function (err) {
+	return new Promise(function (resolve, reject) {
+		self.pool.getConnection(function (err, con) {
 			if (err) {
 				if (con) {
 					con.release();
 				}
-				return defer.reject(err);
+				return reject(err);
 			}
-			defer.resolve([].splice.call(arguments, 1));
-			con.release();
+
+			con.query(query, params, function (err) {
+				if (err) {
+					if (con) {
+						con.release();
+					}
+					return reject(err);
+				}
+				resolve([].splice.call(arguments, 1));
+				con.release();
+			});
 		});
 	});
-	return defer.promise;
 };
 
 /**
@@ -61,16 +62,17 @@ DB.prototype.query = function (query, params) {
  * @return {Promise}
  */
 DB.prototype.end = function () {
-	var defer = Promise.defer();
+	var self = this;
 
-	this.pool.end(function (err) {
-		if (err) {
-			return defer.reject(err);
-		}
+	return new Promise(function (resolve, reject) {
+		self.pool.end(function (err) {
+			if (err) {
+				return reject(err);
+			}
 
-		defer.resolve();
+			resolve();
+		});
 	});
-	return defer.promise;
 };
 
 module.exports = function (name) {

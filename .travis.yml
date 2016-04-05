@@ -10,3 +10,7 @@ script:
 
 before_install:
   - npm -g install npm@latest-2
+
+before_script:
+  - mysql -e 'create database mysqlpromise;'
+  - mysql -u travis mysqlpromise < test/fixtures/db.sql
