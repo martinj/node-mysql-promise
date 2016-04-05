@@ -1,34 +1,100 @@
 'use strict';
-var db = require('../');
+var mysql = require('../');
+
+var dbConfig = {
+	host: 'localhost',
+	user: 'travis',
+	database: 'mysqlpromise'
+};
+
 require('should');
 
 describe('mysql-promise', function () {
 	it('should return correct instance', function () {
-		var defaultDb = db();
-		var namedDb = db('foo');
-		namedDb.should.equal(db('foo'));
-		defaultDb.should.equal(db());
-		defaultDb.should.not.equal(namedDb);
+		var db = mysql();
+		var namedDb = mysql('foo');
+		namedDb.should.equal(mysql('foo'));
+		db.should.equal(mysql());
+		db.should.not.equal(namedDb);
 	});
 
 	describe('isConfigured()', function () {
 
 		it('should return false if it has no pool configured', function () {
-			var defaultDb = db();
-			defaultDb.isConfigured().should.be.false;
+			var db = mysql();
+			db.isConfigured().should.be.false;
 		});
 
 		it('should return false if it has no pool configured', function () {
-			var defaultDb = db();
-			defaultDb.configure({
+			var db = mysql();
+			db.configure({
 				host: 'localhost',
 				user: 'foo',
 				password: 'bar',
 				database: 'db'
 			});
-			defaultDb.isConfigured().should.be.true;
+			db.isConfigured().should.be.true;
 		});
 
 	});
 
+	describe('query()', function () {
+
+		beforeEach(function (done) {
+			var db = mysql('query');
+			db.configure(dbConfig);
+
+			db.query('DELETE FROM test')
+				.then(done.bind(null, null))
+				.catch(done);
+		});
+
+		it('should return results', function (done) {
+			var db = mysql('query');
+
+			db.query('INSERT INTO test SET ?', { id: 1, foobar: 'monkey' })
+				.spread(function (res) {
+					res.affectedRows.should.equal(1);
+					return db.query('SELECT * FROM test');
+				})
+				.spread(function (rows) {
+					rows.should.have.a.lengthOf(1);
+					rows[0].id.should.equal(1);
+					rows[0].foobar.should.equal('monkey');
+					done();
+				})
+				.catch(done);
+		});
+
+		it('should reject on error', function (done) {
+			var db = mysql('query');
+
+			db.query('SELECT * FROM non_existing_table')
+				.catch({ code: 'ER_NO_SUCH_TABLE' }, function (err) {
+					err.should.exist;
+					done();
+				})
+				.catch(done);
+
+		});
+	});
+
+	describe('end()', function () {
+
+		it('should close all connections in the pool', function (done) {
+			var db = mysql('end');
+			db.configure(dbConfig);
+			db.query('SELECT * FROM test')
+				.then(function () {
+					db.pool._allConnections.should.have.a.lengthOf(1);
+					return db.end();
+				})
+				.then(function () {
+					db.pool._allConnections.should.have.a.lengthOf(0);
+					done();
+				})
+				.catch(done);
+		});
+
+	});
 });
