@@ -21,11 +21,11 @@ describe('mysql-promise', function () {
 		it('should return false if it has no pool configured', function () {
 			var defaultDb = db();
 			defaultDb.configure({
-				host: "localhost",
-				user: "foo",
-				password: "bar",
-				database: "db"
-			})
+				host: 'localhost',
+				user: 'foo',
+				password: 'bar',
+				database: 'db'
+			});
 			defaultDb.isConfigured().should.be.true;
 		});
 

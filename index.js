@@ -1,8 +1,8 @@
 'use strict';
 
-var Promise = require('bluebird'),
-	mysql = require('mysql'),
-	instances = {};
+var Promise = require('bluebird');
+var mysql = require('mysql');
+var instances = {};
 
 function DB() {
 	this.pool = null;
@@ -21,7 +21,7 @@ DB.prototype.configure = function (config) {
  * @return {Boolean}
  */
 DB.prototype.isConfigured = function () {
-	return !!this.pool;
+	return Boolean(this.pool);
 };
 
 /**
