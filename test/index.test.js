@@ -1,5 +1,6 @@
 'use strict';
 var mysql = require('../');
+var mysql2 = require('mysql2');
 
 var dbConfig = {
 	host: 'localhost',
@@ -96,5 +97,28 @@ describe('mysql-promise', function () {
 				.catch(done);
 		});
 
+	});
+
+	describe('Specifying mysql driver', function () {
+
+		it('should set driver with first param', function () {
+			var instances = mysql.getInstances();
+			delete instances['_default_'];
+			var db = mysql(mysql2);
+			db.mysql.should.equal(mysql2);
+		});
+
+		it('should use mysql2', function (done) {
+			var db = mysql('mysql2', mysql2);
+			db.mysql.should.equal(mysql2);
+			db.configure(dbConfig);
+
+			db.query('SELECT * FROM non_existing_table')
+				.catch({ code: 'ER_NO_SUCH_TABLE' }, function (err) {
+					err.should.exist;
+					done();
+				})
+				.catch(done);
+		});
 	});
 });
