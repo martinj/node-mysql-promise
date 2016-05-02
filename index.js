@@ -4,7 +4,12 @@ var Promise = require('bluebird');
 var mysql = require('mysql');
 var instances = {};
 
-function DB() {
+/**
+ * Constructor
+ * @param {Object} [mysqlImpl] mysql driver
+ */
+function DB(mysqlImpl) {
+	this.mysql = mysqlImpl || mysql;
 	this.pool = null;
 }
 
@@ -13,7 +18,7 @@ function DB() {
  * @param  {Object} config
  */
 DB.prototype.configure = function (config) {
-	this.pool = mysql.createPool(config);
+	this.pool = this.mysql.createPool(config);
 };
 
 /**
@@ -75,10 +80,23 @@ DB.prototype.end = function () {
 	});
 };
 
-module.exports = function (name) {
+module.exports = function (name, mysqlImpl) {
+	if (typeof (name) !== 'string') {
+		mysqlImpl = name;
+		name = undefined;
+	}
+
 	name = name || '_default_';
 	if (!instances[name]) {
-		instances[name] = new DB();
+		instances[name] = new DB(mysqlImpl);
 	}
 	return instances[name];
+};
+
+/**
+ * Get all instances
+ * @return {Object}
+ */
+module.exports.getInstances = function () {
+	return instances;
 };
