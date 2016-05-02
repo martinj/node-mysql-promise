@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+*  Add support for selecting mysql driver e.g mysql2. [[e62613e](../../commit/e62613e)]
+
 ## 2.0.0
 
 Now uses bluebird@3.x which may contain breaking changes.
