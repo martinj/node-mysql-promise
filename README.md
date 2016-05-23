@@ -50,8 +50,13 @@ $ npm install mysql-promise
 Using [mysql2](https://github.com/sidorares/node-mysql2)
 
 	var mysql2 = require('mysql2');
-	var db = require('mysql-promise')(mysql2);
+	var db = require('mysql-promise')();
+	var opts = {
+		"host": "localhost",
+		"user": "foo",
+		"password": "bar",
+		"database": "db"
+	};
 
-	//with named instance
-	var db2 = require('mysql-promise')('second-db', mysql2);
+	db.configure(opts, require('mysql2'));
 

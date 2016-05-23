@@ -1,24 +1,30 @@
 'use strict';
 
 var Promise = require('bluebird');
-var mysql = require('mysql');
 var instances = {};
+var defaultMysqlDriver;
 
 /**
  * Constructor
- * @param {Object} [mysqlImpl] mysql driver
  */
-function DB(mysqlImpl) {
-	this.mysql = mysqlImpl || mysql;
+function DB() {
 	this.pool = null;
 }
 
 /**
  * Setup the Database connection pool for this instance
  * @param  {Object} config
+ * @param {Object} [mysql] mysql driver
  */
-DB.prototype.configure = function (config) {
-	this.pool = this.mysql.createPool(config);
+DB.prototype.configure = function (config, mysql) {
+	if (!mysql) {
+		if (!defaultMysqlDriver) {
+			defaultMysqlDriver = require('mysql');
+		}
+		mysql = defaultMysqlDriver;
+	}
+
+	this.pool = mysql.createPool(config);
 };
 
 /**
@@ -80,15 +86,10 @@ DB.prototype.end = function () {
 	});
 };
 
-module.exports = function (name, mysqlImpl) {
-	if (typeof (name) !== 'string') {
-		mysqlImpl = name;
-		name = undefined;
-	}
-
+module.exports = function (name) {
 	name = name || '_default_';
 	if (!instances[name]) {
-		instances[name] = new DB(mysqlImpl);
+		instances[name] = new DB();
 	}
 	return instances[name];
 };
