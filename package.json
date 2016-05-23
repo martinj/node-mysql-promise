@@ -35,7 +35,7 @@
     "eslint": "^2.7.0",
     "istanbul": "^0.4.2",
     "jshint": "~2.9.1",
-    "mocha": "2.4.5",
+    "mocha": "2.5.1",
     "mysql2": "^1.0.0-rc.1",
     "release-it": "2.4.0",
     "should": "8.4.0"
