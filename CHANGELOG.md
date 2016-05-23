@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.0.0
+
+*  Change mysql implementation selection to be passed as parameter to .configure() instead of the constructor. [[ecd493a](../../commit/ecd493a)]
+*  Update bluebird@3.4.0 and dev dependencies. [[3ae597a](../../commit/3ae597a)]
+
 ## 2.1.0
 
 *  Add support for selecting mysql driver e.g mysql2. [[e62613e](../../commit/e62613e)]
