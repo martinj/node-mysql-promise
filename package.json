@@ -33,7 +33,7 @@
   "devDependencies": {
     "@aptoma/eslint-config": "4.0.0",
     "eslint": "2.13.0",
-    "istanbul": "0.4.3",
+    "istanbul": "0.4.4",
     "jshint": "2.9.2",
     "mocha": "2.5.3",
     "mysql2": "^1.0.0-rc.1",
