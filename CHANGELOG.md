@@ -1,13 +1,18 @@
 # Changelog
 
+## 3.1.0
+
+* [[a8b693f](../../commit/a8b693f)] Update deps: mysql@2.11.1
+* [[b08d495](../../commit/b08d495)] chore(package): update bluebird to version 3.4.1
+
 ## 3.0.0
 
-*  Change mysql implementation selection to be passed as parameter to .configure() instead of the constructor. [[ecd493a](../../commit/ecd493a)]
-*  Update bluebird@3.4.0 and dev dependencies. [[3ae597a](../../commit/3ae597a)]
+* [[ecd493a](../../commit/ecd493a)] Change mysql implementation selection to be passed as parameter to .configure() instead of the constructor.
+* [[3ae597a](../../commit/3ae597a)] Update bluebird@3.4.0 and dev dependencies.
 
 ## 2.1.0
 
-*  Add support for selecting mysql driver e.g mysql2. [[e62613e](../../commit/e62613e)]
+*  [[e62613e](../../commit/e62613e)] Add support for selecting mysql driver e.g mysql2.
 
 ## 2.0.0
 
