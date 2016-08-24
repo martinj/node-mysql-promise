@@ -27,18 +27,17 @@
     "url": "https://github.com/martinj/node-mysql-promise/issues"
   },
   "dependencies": {
-    "bluebird": "3.4.1",
-    "mysql": "^2.10.2"
+    "bluebird": "^3.4.1",
+    "mysql": "^2.11.1"
   },
   "devDependencies": {
     "@aptoma/eslint-config": "4.0.0",
     "eslint": "2.13.0",
-    "istanbul": "0.4.5",
-    "jshint": "2.9.2",
-    "mocha": "3.0.2",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.0.2",
     "mysql2": "^1.0.0-rc.1",
-    "release-it": "2.4.0",
-    "should": "9.0.2",
-    "sinon": "^1.17.4"
+    "release-it": "^2.4.3",
+    "should": "^11.1.0",
+    "sinon": "^1.17.5"
   }
 }
