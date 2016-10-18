@@ -2,7 +2,7 @@
 
 Small wrapper for [mysql](https://www.npmjs.com/package/mysql) and [mysql2](https://github.com/sidorares/node-mysql2) that use promises.
 
-[![build status](https://secure.travis-ci.org/martinj/node-mysql-promise.png)](http://travis-ci.org/martinj/node-mysql-promise)
+[![Build Status](https://travis-ci.org/martinj/node-mysql-promise.svg?branch=master)](https://travis-ci.org/martinj/node-mysql-promise)
 
 ## Installation
 
