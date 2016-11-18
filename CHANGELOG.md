@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.0
+
+* [[838c1f4](../../commit/838c1f4)] Update dependency mysql@2.12.0
+* [[5d47901](../../commit/5d47901)] add `getConnection()` for getting a connection from the pool.
+* [[7472b3e](../../commit/7472b3e)] Stop support for node v0.10.x Run test again node v6.x.x Greenkeeper ignore eslint.
+
 ## 3.1.0
 
 * [[a8b693f](../../commit/a8b693f)] Update deps: mysql@2.11.1
