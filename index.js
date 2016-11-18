@@ -36,14 +36,11 @@ DB.prototype.isConfigured = function () {
 };
 
 /**
- * Run DB query
- * @param  {String} query
- * @param  {Object} [params]
- * @return {Promise}
+ * Get a connection from the pool
+ * @return {Promise} resolves with the connection
  */
-DB.prototype.query = function (query, params) {
+DB.prototype.getConnection = function () {
 	var self = this;
-	params = params || {};
 
 	return new Promise(function (resolve, reject) {
 		self.pool.getConnection(function (err, con) {
@@ -54,18 +51,37 @@ DB.prototype.query = function (query, params) {
 				return reject(err);
 			}
 
-			con.query(query, params, function (err) {
-				if (err) {
-					if (con) {
-						con.release();
-					}
-					return reject(err);
-				}
-				resolve([].splice.call(arguments, 1));
-				con.release();
-			});
+			return resolve(con);
 		});
 	});
+};
+
+/**
+ * Run DB query
+ * @param  {String} query
+ * @param  {Object} [params]
+ * @return {Promise}
+ */
+DB.prototype.query = function (query, params) {
+	params = params || {};
+
+	return this
+		.getConnection()
+		.then(function (con) {
+			return new Promise(function (resolve, reject) {
+				con.query(query, params, function (err) {
+					if (err) {
+						if (con) {
+							con.release();
+						}
+						return reject(err);
+					}
+
+					con.release();
+					resolve([].splice.call(arguments, 1));
+				});
+			});
+		});
 };
 
 /**

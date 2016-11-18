@@ -9,7 +9,7 @@ var dbConfig = {
 	database: 'mysqlpromise'
 };
 
-require('should');
+var should = require('should');
 
 describe('mysql-promise', function () {
 	it('should return correct instance', function () {
@@ -40,6 +40,37 @@ describe('mysql-promise', function () {
 
 	});
 
+	describe('getConnection()', function () {
+
+		it('should return a connection', function (done) {
+			var db = mysql('connection');
+			db.configure(dbConfig);
+			db.getConnection()
+				.then(function (con) {
+					should(con).exist;
+					con.release();
+					done();
+				})
+				.catch(done);
+		});
+
+		it('should reject if it fails to open a connection', function (done) {
+			var db = mysql('connectFail');
+			db.configure({
+				host: 'localhost',
+				port: 1123,
+				user: 'foo',
+				password: 'bar',
+				database: 'db',
+				connectTimeout: 5
+			});
+
+			db.getConnection()
+				.catch({ code: 'ECONNREFUSED' }, done.bind(null, null))
+				.catch(done);
+		});
+
+	});
 	describe('query()', function () {
 
 		beforeEach(function (done) {
