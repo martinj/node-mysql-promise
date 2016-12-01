@@ -40,6 +40,30 @@ describe('mysql-promise', function () {
 
 	});
 
+	describe('Configureable Promise Implementation', function () {
+
+		it('should use bundled bluebird promise by default', function () {
+			var db = mysql('promise-by-default');
+			db.configure(dbConfig);
+
+			db.PromiseImpl.should.equal(require('bluebird'));
+			var promise = db.getConnection();
+			promise.spread.should.be.a.Function;
+		});
+
+		it('should use configured promise implementation', function () {
+			var db = mysql('native-promise');
+			db.configure(dbConfig, null, Promise); // eslint-disable-line
+
+			db.PromiseImpl.should.equal(Promise); // eslint-disable-line
+
+			var promise = db.getConnection();
+			should.not.exist(promise.spread);
+			promise.then.should.be.a.Function;
+		});
+
+	});
+
 	describe('getConnection()', function () {
 
 		it('should return a connection', function (done) {

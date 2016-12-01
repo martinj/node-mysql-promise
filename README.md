@@ -60,3 +60,9 @@ Using [mysql2](https://github.com/sidorares/node-mysql2)
 
 	db.configure(opts, require('mysql2'));
 
+
+Use different promise implementation
+
+	var db = require('mysql-promise')();
+
+	db.configure(dbOpts, null, PromiseImpl);

@@ -1,6 +1,6 @@
 'use strict';
 
-var Promise = require('bluebird');
+var BlueBird = require('bluebird');
 var instances = {};
 var defaultMysqlDriver;
 
@@ -9,14 +9,16 @@ var defaultMysqlDriver;
  */
 function DB() {
 	this.pool = null;
+	this.PromiseImpl = BlueBird;
 }
 
 /**
  * Setup the Database connection pool for this instance
  * @param  {Object} config
  * @param {Object} [mysql] mysql driver
+ * @param {Object} [PromiseImpl] PromiseImpl promise implementation to use
  */
-DB.prototype.configure = function (config, mysql) {
+DB.prototype.configure = function (config, mysql, PromiseImpl) {
 	if (!mysql) {
 		if (!defaultMysqlDriver) {
 			defaultMysqlDriver = require('mysql');
@@ -24,6 +26,9 @@ DB.prototype.configure = function (config, mysql) {
 		mysql = defaultMysqlDriver;
 	}
 
+	if (PromiseImpl) {
+		this.PromiseImpl = PromiseImpl;
+	}
 	this.pool = mysql.createPool(config);
 };
 
@@ -42,7 +47,7 @@ DB.prototype.isConfigured = function () {
 DB.prototype.getConnection = function () {
 	var self = this;
 
-	return new Promise(function (resolve, reject) {
+	return new self.PromiseImpl(function (resolve, reject) {
 		self.pool.getConnection(function (err, con) {
 			if (err) {
 				if (con) {
@@ -63,12 +68,13 @@ DB.prototype.getConnection = function () {
  * @return {Promise}
  */
 DB.prototype.query = function (query, params) {
+	var self = this;
 	params = params || {};
 
 	return this
 		.getConnection()
 		.then(function (con) {
-			return new Promise(function (resolve, reject) {
+			return new self.PromiseImpl(function (resolve, reject) {
 				con.query(query, params, function (err) {
 					if (err) {
 						if (con) {
@@ -91,7 +97,7 @@ DB.prototype.query = function (query, params) {
 DB.prototype.end = function () {
 	var self = this;
 
-	return new Promise(function (resolve, reject) {
+	return new self.PromiseImpl(function (resolve, reject) {
 		self.pool.end(function (err) {
 			if (err) {
 				return reject(err);
