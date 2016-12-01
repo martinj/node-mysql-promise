@@ -1,6 +1,6 @@
 {
   "name": "mysql-promise",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Small wrapper for mysql that use promises.",
   "main": "index.js",
   "scripts": {

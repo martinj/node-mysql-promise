@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0
+
+* [[b98ec1e](../../commit/b98ec1e)] Add option for using different promise implementation
+
 ## 4.0.0
 
 * [[838c1f4](../../commit/838c1f4)] Update dependency mysql@2.12.0
