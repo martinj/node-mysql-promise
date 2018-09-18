@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.0
+
+* [[51c64cc](../../commit/51c64cc)] Drop support for node < 6
+* [[518eaf1](../../commit/518eaf1)] Update dependencies: bluebird@3.5.2, mysql@2.16.0
+
 ## 4.1.0
 
 * [[b98ec1e](../../commit/b98ec1e)] Add option for using different promise implementation
