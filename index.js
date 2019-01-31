@@ -33,7 +33,7 @@ DB.prototype.configure = function (config, mysql, PromiseImpl) {
 };
 
 /**
- * Check if a pool has been configured for this instane.
+ * Check if a pool has been configured for this instance.
  * @return {Boolean}
  */
 DB.prototype.isConfigured = function () {
